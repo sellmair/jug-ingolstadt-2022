@@ -8,6 +8,7 @@ plugins {
 }
 
 kotlin {
+    jvm()
     macosArm64()
     macosX64()
     iosX64()
@@ -16,6 +17,7 @@ kotlin {
 
     val commonMain by sourceSets.getting
     val appleMain by sourceSets.creating
+    val jvmMain by sourceSets.getting
 
     appleMain.dependsOn(commonMain)
 
@@ -31,6 +33,10 @@ kotlin {
 
     appleMain.dependencies {
         implementation("io.ktor:ktor-client-darwin:2.1.3")
+    }
+
+    jvmMain.dependencies {
+        implementation("io.ktor:ktor-client-okhttp:2.1.3")
     }
 
     jvm {
