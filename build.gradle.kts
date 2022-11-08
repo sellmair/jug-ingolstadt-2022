@@ -2,6 +2,7 @@
 
 plugins {
     kotlin("multiplatform")
+    application
 }
 
 kotlin {
@@ -13,5 +14,11 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    jvm()
+    jvm {
+        withJava()
+    }
+}
+
+application {
+    mainClass.set("org.jetbrains.sample.MainKt")
 }
