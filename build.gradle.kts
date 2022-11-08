@@ -17,6 +17,11 @@ kotlin {
     jvm {
         withJava()
     }
+
+    macosArm64().binaries.executable {
+        entryPoint = "org.jetbrains.sample.main"
+        baseName = "jug"
+    }
 }
 
 application {
