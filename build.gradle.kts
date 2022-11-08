@@ -1,6 +1,7 @@
 @file:Suppress("OPT_IN_USAGE")
 
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     kotlin("multiplatform")
@@ -21,9 +22,20 @@ kotlin {
 
     appleMain.dependsOn(commonMain)
 
+
     targets.withType<KotlinNativeTarget>()
         .matching { it.konanTarget.family.isAppleFamily }
         .configureEach { compilations.getByName("main").defaultSourceSet.dependsOn(appleMain) }
+
+    val xcFramework = XCFramework("chucky")
+
+    targets.withType<KotlinNativeTarget>()
+        .matching { it.konanTarget.family == org.jetbrains.kotlin.konan.target.Family.IOS }
+        .configureEach {
+            binaries.framework("chucky") {
+                xcFramework.add(this)
+            }
+        }
 
     commonMain.dependencies {
         implementation("io.ktor:ktor-client-core:2.1.3")
