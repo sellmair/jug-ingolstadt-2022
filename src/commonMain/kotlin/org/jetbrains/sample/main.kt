@@ -4,6 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.utils.io.core.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 fun main() {
@@ -16,5 +17,11 @@ fun main() {
 suspend fun getJoke(): String {
     return HttpClient(HostMachine.httpClientEngine).use {
         it.get("https://api.chucknorris.io/jokes/random").bodyAsText()
+    }
+}
+
+fun getJokeSync(): String {
+    return runBlocking(Dispatchers.Default) {
+        getJoke()
     }
 }

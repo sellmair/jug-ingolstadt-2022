@@ -27,12 +27,12 @@ kotlin {
         .matching { it.konanTarget.family.isAppleFamily }
         .configureEach { compilations.getByName("main").defaultSourceSet.dependsOn(appleMain) }
 
-    val xcFramework = XCFramework("chucky")
+    val xcFramework = XCFramework()
 
     targets.withType<KotlinNativeTarget>()
         .matching { it.konanTarget.family == org.jetbrains.kotlin.konan.target.Family.IOS }
         .configureEach {
-            binaries.framework("chucky") {
+            binaries.framework {
                 xcFramework.add(this)
             }
         }
